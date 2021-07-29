@@ -1,0 +1,89 @@
+{% extends "admin_base.html" %}
+{% block page_title %}User List{% endblock %}
+{% block content %}
+    <!-- begin #content -->
+    <div id="content" class="content">
+        <div class="card bg-silver mb-3">
+            <div class="card-body py-2 px-3">
+                <div class="d-inline pull-left">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">User Management</li>
+                        <li class="breadcrumb-item active" aria-current="page"> Create User</li>
+                    </ol>
+                </div>
+                <div class="d-inline pull-right">
+                    <a href="{% url 'create_user_view' %}" class="btn btn-sm btn-primary"> Create User </a>
+                </div>
+            </div>
+        </div>
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"> User List</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload">
+                        <i class="fa fa-redo"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} fade show">
+                            <span class="close" data-dismiss="alert">×</span>
+                            <div class="text-center">
+                                {% if message.tags == 'success' %}
+                                    <span><i class="fa fa-check-circle fa-lg"></i></span>
+                                    <span class="">{{ message }}</span> {% else %}
+                                    <span><i class="fa fa-exclamation-circle fa-lg"></i></span>
+                                    <span class="">{{ message }}</span> {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %} {% endif %}
+            </div>
+            <div class="panel-body">
+                <table id="data-table-combine" class="table table-striped table-bordered table-td-valign-middle">
+                    <thead>
+                        <tr class="text-center">
+                            <th width="1%"></th>
+                            <th class="text-nowrap"> First Name </th>
+                            <th class="text-nowrap"> Last Name </th>
+                            <th class="text-nowrap"> username </th>
+                            <th class="text-nowrap"> Email </th>
+                            <th class="text-nowrap"> Contact No </th>
+                            <th class="text-nowrap"> Admin </th>
+                            <th class="text-nowrap">
+                                <i class="bi bi-gear-wide-connected"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in display_data %}
+                            <tr class="odd gradeX">
+                                <td width="1%" class="f-s-600 text-inverse"> {{ forloop.counter }}</td>
+                                <td>{{ data.first_name }}</td>
+                                <td>{{ data.last_name }}</td>
+                                <td>{{ data.username }}</td>
+                                <td>{{ data.email }}</td>
+                                <td>{{ data.contact_no }}</td>
+                                <td class="text-center">{% if data.is_admin == True %}Yes{% endif %}</td>
+                                <td width="15%" class="text-center">
+                                    <a href="{% url 'user_edit' data.id %}" type="button" class="btn btn-sm btn-dark text-white btn-edit" data-pk="{{ data.id }}" value="View"> Edit </a>
+                                    <a href="{% url 'user_edit' data.id %}" type="button" class="btn btn-sm btn-danger text-white btn-edit" data-pk="{{ data.id }}" value="Delete"> Delete </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end #content -->
+{% endblock %}
+{% block javascript %}
+{% endblock %}

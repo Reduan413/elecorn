@@ -1,0 +1,79 @@
+{% extends "admin_base.html" %} {% block pageTitle %}{% endblock %} {% block page_title %}Create Company{% endblock %} {% block nav_url_path %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item" aria-current="page"><a href="">Company</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a href="">Company List</a></li>
+		<li class="breadcrumb-item active" aria-current="page"><a href="" class="active">Create Company</a></li>
+	</ol>
+</nav>
+{% endblock %} {% block content %}
+<div id="content" class="content">
+	<!-- begin panel -->
+	<div class="panel panel-inverse">
+		<div class="panel-heading">
+			<h4 class="panel-title">Create Company</h4>
+			<div class="mr-3">
+				<a href="" class="btn btn-primary btn-xs rounded-0">Company List</a>
+			</div>
+			<div class="panel-heading-btn">
+				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+			</div>
+		</div>
+		{% if messages %} {% for message in messages %}
+		<div class="alert alert-success fade show">
+			<span class="close" data-dismiss="alert">×</span>
+			<i class="fa fa-check fa-2x pull-left m-r-10"></i>
+			<p class="m-b-0">{{ message}}</p>
+		</div>
+		{% endfor %} {% endif %}
+		<form action="" method="POST">
+			{% csrf_token %}
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-2 form-group">
+						<label>Code</label>
+						<input type="text" class="form-control" />
+					</div>
+					<div class="col-md-4 form-group">
+						<label>Name</label>
+						<input type="text" class="form-control" />
+					</div>
+					<div class="col-md-3 form-group">
+						<label>Email</label>
+						<input type="text" class="form-control" />
+					</div>
+					<div class="col-md-3 form-group">
+						<label>Contact No</label>
+						<input type="text" class="form-control" />
+					</div>
+					<div class="col-md-6 form-group">
+						<label>Address</label>
+						<textarea name="" class="form-control" rows="2"></textarea>
+					</div>
+					<div class="col-md-3 form-group">
+						<label>License No</label>
+						<input type="text" class="form-control" />
+					</div>
+					<div class="col-md-3">
+						<label>Logo</label>
+						<div class="custom-file">
+							<label>Logo</label>
+							<input type="file" class="custom-file-input" id="customFile" />
+							<label class="custom-file-label" for="customFile">Choose file</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-footer text-right bg-silver border-gray border rounded">
+					<a href="#" class="btn btn-white">Cancel</a>
+					<a href="#" class="btn btn-primary m-l-5">Save</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- end panel -->
+</div>
+
+{% endblock %} {% block javascript %} {% endblock %}

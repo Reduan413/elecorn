@@ -1,0 +1,280 @@
+{% extends "admin_base.html" %} {% block pageTitle %}{% endblock %} {% block page_title %}Create Product{% endblock %}
+{% block nav_url_path %}{% endblock %} {% block content %}
+{% load static %}
+<div id="content" class="content">
+    <div class="card bg-silver mb-3">
+        <div class="card-body py-2 px-3">
+            <div class="d-inline pull-left">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Inventory</li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="{% url 'inventory_product_list' %}">Product</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Create Product</li>
+                </ol>
+            </div>
+            <div class="d-inline pull-right">
+                <a href="{% url 'inventory_product_list' %}" class="btn btn-sm btn-primary">Product List</a>
+            </div>
+        </div>
+    </div> <!-- begin panel -->
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <h4 class="panel-title">Create Product</h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+        </div>
+        {% if messages %} {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} fade show"><span class="close" data-dismiss="alert">×</span>
+            <div class="text-center"> {% if message.tags == 'success' %}
+                <span><i class="fa fa-check-circle fa-lg"></i></span>
+                <span class=""> {{ message }}</span> {% else %}
+                <span><i class="fa fa-exclamation-circle fa-lg"></i></span>
+                <span class=""> {{ message }}</span> {% endif %}
+            </div>
+        </div>
+        {% endfor %} {% endif %}
+        <form action="" method="POST" id="post-form-data">
+            {% csrf_token %}
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2 form-group">
+                        <label>Code</label>
+                        <input type="text" name="code" class="form-control" value="{{ last_code }}" readonly />
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Company</label>
+                        <select name="company_id" class="default-select2 form-control">
+                            {% for data in display_company %}
+                            <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>Part No</label>
+                        <input type="text" name="part_no" class="form-control" />
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Market Name</label>
+                        <input type="text" name="market_name" class="form-control" />
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Model</label>
+                        <input type="text" name="model_no" class="form-control" />
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Unit</label>
+                        <select name="unit_id" class="default-select2 form-control">
+                            {% for data in display_unit %}
+                            <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Brand</label>
+                        <select name="brand_id" class="default-select2 form-control">
+                            {% for data in display_brand %}
+                            <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Segment</label>
+                        <select name="segment_id" class="default-select2 form-control">
+                            {% for data in display_segment %}
+                            <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Category</label>
+                        <select name="category_id" class="default-select2 form-control">
+                            {% for data in display_category %}
+                            <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Sub-Category</label>
+                        <select name="sub_category_id" class="default-select2 form-control">
+                            {% for data in display_sub_category %}
+                            <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" name="description"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <h5 class="text-center bg-silver text-gray rounded py-2 px-2">Additional Information</h5>
+                    </div>
+                    <!--                    <div class="col-md-3 form-group">-->
+                    <!--                        <label>Room No</label>-->
+                    <!--                        <select name="inventory_unit" class="default-select2 form-control">-->
+                    <!--                            {% for data in display_unit %}-->
+                    <!--                            <option value="{{ data.id }}">{{ data.name }}</option> {% endfor %}-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="col-md-3 form-group">-->
+                    <!--                        <label>Partition No</label>-->
+                    <!--                        <select name="inventory_unit" class="default-select2 form-control">-->
+                    <!--                            {% for data in display_unit %}-->
+                    <!--                            <option value="{{ data.id }}">{{ data.name }}</option> {% endfor %}-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="col-md-2 form-group">-->
+                    <!--                        <label>Rack No</label>-->
+                    <!--                        <select name="inventory_unit" class="default-select2 form-control">-->
+                    <!--                            {% for data in display_unit %}-->
+                    <!--                            <option value="{{ data.id }}">{{ data.name }}</option>-->
+                    <!--                            {% endfor %}-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="col-md-2 form-group">-->
+                    <!--                        <label>Bin No</label>-->
+                    <!--                        <select name="inventory_unit" class="default-select2 form-control">-->
+                    <!--                            {% for data in display_unit %}-->
+                    <!--                            <option value="{{ data.id }}">{{ data.name }}</option>-->
+                    <!--                            {% endfor %}-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="col-md-2 form-group">-->
+                    <!--                        <label>Box No</label>-->
+                    <!--                        <select name="inventory_unit" class="default-select2 form-control">-->
+                    <!--                            {% for data in display_unit %}-->
+                    <!--                            <option value="{{ data.id }}">{{ data.name }}</option>-->
+                    <!--                            {% endfor %}-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
+                    <div class="col-md-3 form-group">
+                        <label>Barcode Type</label>
+                        <select name="barcode_type" class="default-select2 form-control">
+                            <option value="C128" selected="selected">Code 128 (C128)</option>
+                            <option value="C39">Code 39 (C39)</option>
+                            <option value="EAN13">EAN-13</option>
+                            <option value="EAN8">EAN-8</option>
+                            <option value="UPCA">UPC-A</option>
+                            <option value="UPCE">UPC-E</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>SKU</label>
+                        <input type="text" name="sku_no" class="form-control" />
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>Alert Quantity</label>
+                        <input type="text" name="alert_quantity" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Image</label>
+                        <div class="custom-file">
+                            <label>Logo</label>
+                            <input type="file" class="custom-file-input" id="customFile" />
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Narration</label>
+                        <textarea class="form-control" name="narration"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <h5 class="text-center bg-silver text-gray rounded py-2 px-2">Accounting Information</h5>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>Selling Price</label>
+                        <input type="text" name="selling_price" class="form-control text-right" id="selling_price-id" />
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>Purchase Price</label>
+                        <input type="text" name="purchase_price" class="form-control text-right" id="purchase_price-id" />
+                    </div>
+                </div>
+                <div class="panel-footer text-right bg-silver-darker rounded">
+                    <input type="submit" class="btn btn-white px-3" value="New" id="form_clear" />
+                    <input type="submit" class="btn btn-dark px-5" value="Save" id="btnSave" />
+                </div>
+            </div>
+        </form>
+    </div> <!-- end panel -->
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+    // Default and Convert to Decimal Value
+    $(document).ready(function () {
+
+        $("#selling_price-id").val("0.00");
+        $("#purchase_price-id").val("0.00");
+        $("#selling_price-id").on('change', function () {
+            let selling_price = $("#selling_price-id").val();
+            if (selling_price == "") {
+                $("#selling_price-id").val("0.00");
+            } else {
+                $('#selling_price-id').val(parseInt(selling_price).toFixed(2));
+            }
+        });
+        $("#purchase_price-id").on('change', function () {
+            let purchase_price = $("#purchase_price-id").val();
+            if (purchase_price == "") {
+                $("#purchase_price-id").val("0.00");
+            } else {
+                $('#purchase_price-id').val(parseInt(purchase_price).toFixed(2));
+            }
+        });
+
+        // Ajax POST Request
+        $("#post-form-data").on('submit', function (e) {
+            e.preventDefault();
+            let csrf = $("input[name=csrfmiddlewaretoken]").val();
+            let postContentForm = $("#post-form-data").serialize();
+            console.log(postContentForm);
+            // let data = {};
+            // $.each(postContentForm, function () {
+            //     data[this.name] = this.value;
+            // })
+            // console.log(data);
+            post_data = { csrfmiddlewaretoken: csrf, 'data': postContentForm };
+            console.log(post_data);
+            $.ajax({
+                url: "{% url 'create_inventory_product' %}",
+                method: 'POST',
+                data: postContentForm,
+                async: true,
+                success: function (result) {
+                    $('form').trigger('reset');
+                }
+            })
+        });
+
+        // Clear on click New
+        $("#form_clear").on('click', function (e) {
+            e.preventDefault();
+            $('form').trigger('reset');
+            let selling_price = $("#selling_price-id").val();
+            if (selling_price == "") {
+                $("#selling_price-id").val("0.00");
+            } else {
+                $('#selling_price-id').val(parseInt(selling_price).toFixed(2));
+            }
+
+            let purchase_price = $("#purchase_price-id").val();
+            if (purchase_price == "") {
+                $("#purchase_price-id").val("0.00");
+            } else {
+                $('#purchase_price-id').val(parseInt(purchase_price).toFixed(2));
+            }
+        });
+
+        // End Document.Ready
+
+
+    });
+
+</script>
+{% endblock %}

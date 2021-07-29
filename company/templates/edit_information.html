@@ -1,0 +1,110 @@
+{% extends "admin_base.html" %} {% load static %} {% block page_title %}Admin
+Dashboard{% endblock %} {% block content %}
+
+<!-- begin #content -->
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <h1 class="p-3 mb-2 bg-success text-white"> Update User Information</h1>
+
+  <form id="form" class="row g-3" action="" method="post">
+    {% csrf_token %}
+    <div id="firstNameDiv" class="col-md-4 form_control">
+      <label for="validationCustom01" class="form-label">First name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        value= {{ userinformations.firstName}}
+        name="firstName"
+      />
+      <!--<i class="fa fa-check-circle"></i>
+          <i class="fa fa-exclamation-circle"></i>-->
+      <small id="firstName_error"></small>
+    </div>
+    <div id="lastNameDiv" class="col-md-4 form_control">
+      <label for="validationCustom02" class="form-label">Last name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        value={{ userinformations.lastName}}
+        name="lastName"
+      />
+      <small id="lastName_error"></small>
+    </div>
+
+    <div id="emailDiv" class="col-md-4 form_control">
+      <label for="inputEmail4" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email" value={{ userinformations.email}}>
+      <small id="email_error"></small>
+    </div>
+    <div id="userNameDiv" class="col-md-4 form_control">
+      <label for="validationCustomUsername" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="userName"
+        aria-describedby="inputGroupPrepend"
+        value={{ userinformations.userName}}
+        name="userName"
+      />
+      <small id="userName_error"></small>
+    </div>
+    <div id="passwordDiv" class="col-md-4 form_control">
+      <label for="inputPassword4" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        value={{ userinformations.password}}
+        name="password"
+      />
+      <small id="pas_error"></small>
+    </div>
+    <div id="passwordDiv" class="col-md-4 form_control">
+      <label for="cars" class="form-label">Choose a Company</label>
+
+      <select name="company" class="form-control" id="company">
+        <option value={{ userinformations.company}}>{{ userinformations.company}}</option>
+        <option value="Volvo">Volvo</option>
+        <option value="Saab">Saab</option>
+        <option value="Mercedes">Mercedes</option>
+        <option value="Audi">Audi</option>
+      </select>
+    </div>
+    <div class="col-12">
+      <input
+        type="submit"
+        id="submit"
+        name="submit"
+        value="Update"
+        class="btn btn-primary mt-3"
+      />
+    </div>
+  </form>
+  </div>
+</div>
+<!-- end #content -->
+
+{% endblock %} {% block javascript %}
+
+<script src="{% static 'plugins/d3/d3.min.js' %}"></script>
+<script src="{% static 'plugins/nvd3/build/nv.d3.min.js' %}"></script>
+<script src="{% static 'plugins/jvectormap-next/jquery-jvectormap.min.js' %}"></script>
+<script src="{% static 'plugins/jvectormap-next/jquery-jvectormap-world-mill.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-calendar/js/bootstrap_calendar.min.js' %}"></script>
+<script src="{% static 'plugins/gritter/js/jquery.gritter.js' %}"></script>
+<script>
+  COLOR_BLUE =
+    COLOR_INDIGO =
+    COLOR_RED =
+    COLOR_ORANGE =
+    COLOR_LIME =
+    COLOR_TEAL =
+      "rgba(0,0,0,0.5)";
+  COLOR_AQUA = COLOR_DARK_LIGHTER = COLOR_GREEN = "rgba(0,0,0,0.75)";
+</script>
+
+<script src="{% static 'js/demo/dashboard-v2.js' %}"></script>
+
+{% endblock %}

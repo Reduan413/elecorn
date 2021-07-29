@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Admin Login | ELECORN</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="{% static 'css/google/app.min.css' %}" rel="stylesheet"/>
+    <!-- ================== END BASE CSS STYLE ================== -->
+</head>
+<body class="pace-top">
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade show">
+    <span class="spinner"></span>
+</div>
+<!-- end #page-loader -->
+
+<!-- begin #page-container -->
+<div id="page-container" class="fade">
+    <!-- begin login -->
+    <div class="login login-v1">
+        <!-- begin login-container -->
+        <div class="login-container">
+            <!-- begin login-header -->
+            {% block namespace %}
+            <div class="login-header">
+                <div class="brand">
+                    <b>ELECORN</b>
+                    <span class="logo">
+						<span class="text-gray">powered by&nbsp;</span>
+						<span class="text-red">S</span>
+						<span class="text-red">E</span>
+						<span class="text-red">A</span>
+                        <span class="text-red">R</span>
+                        <span class="text-red">A</span>
+                    </span>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-lock"></i>
+                </div>
+            </div>
+            {% endblock %}
+            <!-- end login-header -->
+            <!-- begin login-body -->
+            <div class="login-body">
+                <!-- begin login-content -->
+                <div class="login-content">
+                    <form method="POST" class="margin-bottom-0">
+                        {% csrf_token %}
+                        <div class="form-group m-b-20">
+                            <input type="text" name="username" class="form-control form-control-lg inverse-mode"
+                                   placeholder="Username" required/>
+                        </div>
+                        <div class="form-group m-b-20">
+                            <input type="password" name="password" class="form-control form-control-lg inverse-mode"
+                                   placeholder="Password" required/>
+                        </div>
+                        <div class="m-b-20">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-danger fade show">
+                                        <span class="close" data-dismiss="alert">×</span>
+                                        <strong>{{ message }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="checkbox checkbox-css m-b-20">
+                            <input type="checkbox" id="remember_checkbox"/>
+                            <label for="remember_checkbox">
+                                Remember Me
+                            </label>
+                        </div>
+                        <div class="login-buttons">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign me in</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- end login-content -->
+            </div>
+            <!-- end login-body -->
+        </div>
+        <!-- end login-container -->
+    </div>
+    <!-- end login -->
+
+    <!-- begin scroll to top btn -->
+    <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i
+            class="fa fa-angle-up"></i></a>
+    <!-- end scroll to top btn -->
+</div>
+<!-- end page container -->
+
+<!-- ================== BEGIN BASE JS ================== -->
+<script src="{% static 'js/app.min.js' %}"></script>
+<script src="{% static 'js/theme/google.min.js' %}"></script>
+<!-- ================== END BASE JS ================== -->
+</body>
+</html>

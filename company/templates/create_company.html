@@ -1,0 +1,134 @@
+{% extends "admin_base.html" %} {% block pageTitle %}{% endblock %} {% block page_title %}Create Company{% endblock %}
+{% block nav_url_path %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="">Company</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="">Company List</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="" class="active">Create Company</a></li>
+        </ol>
+    </nav>
+{% endblock %} {% block content %}
+    <div id="content" class="content">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Create Company</h4>
+                <div class="mr-3">
+                    <a href="" class="btn btn-primary btn-xs rounded-0">Company List</a>
+                </div>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                </div>
+            </div>
+            <div id="send_messege">
+                <!-- # Messege Visible Here -->
+            </div>
+            {% if messages %} {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} fade show">
+                    <span class="close" data-dismiss="alert">×</span>
+                    <div class="text-center">
+                        {% if message.tags == 'success' %}
+                            <span><i class="fa fa-check-circle fa-lg"></i></span>
+                            <span class="">{{ message }}</span>
+                        {% else %}
+                            <span><i class="fa fa-exclamation-circle fa-lg"></i></span>
+                            <span class="">{{ message }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %} {% endif %}
+            <form action="" method="POST" id="post-form-data">
+                {% csrf_token %}
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2 form-group">
+                            <label>Code</label>
+                            <input type="text" name="code" class="form-control" value="{{ last_code }}" readonly/>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Contact No</label>
+                            <input type="text" name="contact_no" class="form-control"/>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Address</label>
+                            <textarea name="address" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>License No</label>
+                            <input type="text" name="license_no" class="form-control"/>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Logo</label>
+                            <div class="custom-file">
+                                <label>Logo</label>
+                                <input type="file" class="custom-file-input" id="customFile"/>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer text-right bg-silver border-gray border rounded">
+                        <button href="#" class="btn btn-white" id="form_clear">New</button>
+                        <button href="#" class="btn btn-primary m-l-5">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- end panel -->
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+        // Default and Convert to Decimal Value
+        $(document).ready(function () {
+            // Ajax POST Request
+            $("#post-form-data").on('submit', function (e) {
+                e.preventDefault();
+                let csrf = $("input[name=csrfmiddlewaretoken]").val();
+                let postContentForm = $("#post-form-data").serialize();
+                console.log(postContentForm);
+                // let data = {};
+                // $.each(postContentForm, function () {
+                //     data[this.name] = this.value;
+                // })
+                // console.log(data);
+                post_data = {csrfmiddlewaretoken: csrf, 'data': postContentForm};
+                console.log(post_data);
+                $.ajax({
+                    url: "{% url 'create_company' %}",
+                    method: 'POST',
+                    data: postContentForm,
+                    async: true,
+                    success: function (result) {
+                        send_messege = "<div class='alert alert-success fade show'><span class='close' data-dismiss='alert'>×</span><div class='text-center'><span class=''>Company saved</span></div></div>"
+                        $("#send_messege").html(send_messege);
+                        $('form').trigger('reset');
+                    }
+                })
+            });
+
+            // Clear on click New
+            $("#form_clear").on('click', function (e) {
+                e.preventDefault();
+                $('form').trigger('reset');
+            });
+
+            // End Document.Ready
+
+
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+<div id="sidebar" class="sidebar bg-silver"> <!-- begin sidebar scrollbar -->
+    <div data-scrollbar="true" data-height="100%"> <!-- begin sidebar nav -->
+        <ul class="nav">
+            <li class="nav-header">Navigation</li>
+            <li class=""><a href="{% url 'admin_dashboard' %}">
+                <i class="material-icons">home</i>
+                <span>Dashboard</span>
+            </a></li>
+            <li class="has-sub"><a href="javascript:;">
+                <b class="caret"></b>
+                <i class="material-icons">list</i>
+                <span>Company</span>
+            </a>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'company_list' %}">Company List</a></li>
+                    <li><a href="{% url 'create_company' %}">Create Company</a></li>
+                    <li><a href="{% url 'cost_center_list' %}">Cost Center</a></li>
+                    <li><a href="{% url 'department_list' %}">Department</a></li>
+                </ul>
+            </li>
+            <li class="has-sub"><a href="javascript:;">
+                <b class="caret"></b>
+                <i class="material-icons">list</i>
+                <span>Inventory</span>
+            </a>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'inventory_product_list' %}">Product List</a></li>
+                    <li><a href="{% url 'create_inventory_product' %}">Create Product</a></li>
+                    <li><a href="{% url 'inventory_category_list' %}">Category</a></li>
+                    <li><a href="{% url 'inventory_sub_category_list' %}">Sub-Category</a></li>
+                    <li><a href="{% url 'inventory_brand_list' %}">Brand</a></li>
+                    <li><a href="{% url 'inventory_locator_name_list' %}">Locator Name</a></li>
+                    <li><a href="{% url 'inventory_segment_list' %}">Segment</a></li>
+                    <li><a href="{% url 'inventory_unit' %}">Unit</a></li>
+                    <li class="has-sub"><a href="javascript:;">
+                        <b class="caret"></b>Warehouse</a>
+                        <ul class="sub-menu">
+                            <li><a href="{% url 'warehouse_list' %}">Warehouse</a></li>
+                            <li><a href="{% url 'warehouse_room_list' %}">Room</a></li>
+                            <li><a href="{% url 'warehouse_rack_list' %}">Rack</a></li>
+                            <li><a href="{% url 'warehouse_bin_list' %}">Bin</a></li>
+                            <li><a href="{% url 'warehouse_box_list' %}">Box</a></li>
+                            <li><a href="{% url 'warehouse_type_list' %}">Type</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-sub"><a href="javascript:;">
+                <b class="caret"></b>
+                <i class="material-icons">list</i>
+                <span>RMA</span>
+            </a>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'repair_request_create' %}">Repair Request</a></li>
+                    <li><a href="{% url 'repair_request_list' %}">Repair Request List</a></li>
+                    <li><a href="{% url 'incident_category_list' %}">Incident Category</a></li>
+                </ul>
+            </li>
+            <li class="has-sub"><a href="javascript:;">
+                <b class="caret"></b>
+                <i class="material-icons">list</i>
+                <span>Engineer</span>
+            </a>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'engineer_assigned_list' %}">Request List</a></li>
+                    <li><a href="{% url 'engineer_repair_report' %}">Reapir Report</a></li>
+                </ul>
+            </li>
+            <li class="has-sub"><a href="javascript:;">
+                <b class="caret"></b>
+                <i class="material-icons">list</i>
+                <span>User Management</span>
+            </a>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'user_list' %}">User List</a></li>
+                    <li><a href="{% url 'create_user_view' %}">Create User</a></li>
+                </ul>
+            </li>
+            <li class="has-sub"><a href="javascript:;">
+                <b class="caret"></b>
+                <i class="material-icons">list</i>
+                <span>Menu Level</span>
+            </a>
+                <ul class="sub-menu">
+                    <li class="has-sub"><a href="javascript:;">
+                        <b class="caret"></b> Menu 1.1
+                    </a>
+                        <ul class="sub-menu">
+                            <li class="has-sub"><a href="javascript:;">
+                                <b class="caret"></b> Menu 2.1
+                            </a>
+                                <ul class="sub-menu">
+                                    <li><a href="javascript:;">Menu 3.1</a></li>
+                                    <li><a href="javascript:;">Menu 3.2</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="javascript:;">Menu 2.2</a></li>
+                            <li><a href="javascript:;">Menu 2.3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:;">Menu 1.2</a></li>
+                    <li><a href="javascript:;">Menu 1.3</a></li>
+                </ul>
+            </li>
+        </ul> <!-- end sidebar nav -->
+    </div> <!-- end sidebar scrollbar -->
+</div>
+<div class="sidebar-bg"></div>

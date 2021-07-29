@@ -1,0 +1,199 @@
+{% extends "admin_base.html" %} {% block pageTitle %}{% endblock %} {% block page_title %}Cost Center{% endblock %}
+{% block nav_url_path %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item disabled" aria-current="page"><a href="">Company</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="">Cost Center</a></li>
+        </ol>
+    </nav>
+{% endblock %}{% block content %}
+    <div id="content" class="content">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Create Cost Center</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                </div>
+            </div>
+            <div id="send_messege">
+                <!-- # Messege Visible Here -->
+            </div>
+            {% if messages %} {% for message in messages %}
+                <div class="alert alert-success fade show">
+                    <span class="close" data-dismiss="alert">×</span>
+                    <i class="fa fa-check fa-2x pull-left m-r-10"></i>
+                    <p class="m-b-0">{{ message }}</p>
+                </div>
+            {% endfor %} {% endif %}
+            <div class="panel-body">
+                <form action="" method="POST" data-parsley-validate="true" id="post-form-data">
+                    {% csrf_token %}
+                    <div class="row" id="my_friends">
+                        <div class="col-md-2 form-group">
+                            <label>Code</label>
+                            <input type="text" name="code" class="form-control" id="" value="{{ next_code }}" readonly/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" id=""/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Company</label>
+                            <select class="form-control" name="company_id" id="exampleFormControlSelect1">
+                                {% for data in company_display %}
+                                    <option value="{{ data.id }}">{{ data.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <br/>
+                            <div class="mt-2">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Cost Center List</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table id="data-table-combine" class="table table-striped table-bordered table-td-valign-middle">
+                    <thead>
+                        <tr class="text-center">
+                            <th width="1%"></th>
+                            <th class="text-nowrap">Code</th>
+                            <th class="text-nowrap">Name</th>
+                            <th class="text-nowrap">Company</th>
+                            <th class="text-nowrap"><i class="bi bi-gear-wide-connected"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if cost_center_display %}
+                            {% for data in cost_center_display %}
+                                <tr class="odd gradeX">
+                                    <td width="1%" class="f-s-600 text-inverse">{{ forloop.counter }}</td>
+                                    <td>{{ data.code }}</td>
+                                    <td>{{ data.name }}</td>
+                                    <td>{{ data.company_id.name }}</td>
+                                    <td class="text-center">
+                                        <input type="button" class="btn btn-sm btn-dark text-white btn-edit" data-pk="{{ data.id }}" value="Edit">
+                                        <input type="button" id="data_delete" class="btn btn-sm btn-danger text-white btn-edit" data-pk="{{ data.id }}" value="Delete">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+        // Default and Convert to Decimal Value
+        $(document).ready(function () {
+            // Ajax POST Request
+            $("#post-form-data").on('submit', function (e) {
+                e.preventDefault();
+                let csrf = $("input[name=csrfmiddlewaretoken]").val();
+                let postContentForm = $("#post-form-data").serialize();
+                console.log(postContentForm);
+                display_list = "";
+                // let data = {};
+                // $.each(postContentForm, function () {
+                //     data[this.name] = this.value;
+                // })
+                // console.log(data);
+                post_data = {csrfmiddlewaretoken: csrf, 'data': postContentForm};
+                console.log(post_data);
+                $.ajax({
+                    url: "{% url 'cost_center_create' %}",
+                    method: 'POST',
+                    data: postContentForm,
+                    async: true,
+                    success: function (result) {
+                        table_data = result.table_data;
+                        console.log(table_data)
+                        for (i = 0; i < table_data.length; i++) {
+                            display_list += "<tr class='odd gradeX'> <td width='1%' class='f-s-600 text-inverse'>" + (i + 1) + "</td> <td>" + table_data[i].code + "</td> <td>" + table_data[i].name + "</td> <td>" + table_data[i].company_id + "</td> <td class='text-center'><input type='button' data-pk=" + table_data[i].id + " class='btn btn-primary btn-sm btn-edit mr-1 btn-edit' value='Edit' ><input type='button' data-pk=" + table_data[i].id + " class='btn btn-danger btn-sm btn-del mr-1 btn-edit' value='Delete' ></td></tr>";
+                        }
+                        send_messege = "<div class='alert alert-success fade show'><span class='close' data-dismiss='alert'>×</span><div class='text-center'><span class=''>Company saved</span></div></div>"
+                        $("#send_messege").html(send_messege);
+                        $('form').trigger('reset');
+                    }
+                })
+            });
+
+            // Clear on click New
+            $("#form_clear").on('click', function (e) {
+                e.preventDefault();
+                $('form').trigger('reset');
+            });
+
+            // Edit Function
+            $("#tableData").on("click", ".btn-edit", function () {
+                output = "";
+                console.log("Edit");
+                let id = $(this).attr("data-pk");
+                let csrf = $("input[name=csrfmiddlewaretoken]").val();
+                console.log(id);
+                post_data = {id: id, csrfmiddlewaretoken: csrf};
+                $.ajax({
+                    url: "{% url 'inventory_category_edit' %}",
+                    method: "POST",
+                    data: post_data,
+                    success: function (data) {
+                        console.log(data);
+                        $("#data_id").val(data.id);
+                        $("#code-id").val(data.code);
+                        $("#name-id").val(data.name);
+                    },
+                });
+            });
+
+            $("#data_delete").on('click', function (e) {
+                e.preventDefault();
+                let id = $(this).attr("data-pk");
+                let csrf = $("input[name=csrfmiddlewaretoken]").val();
+                if (confirm('Are you sure ?')) {
+                    console.log('ok');
+                    post_data = {id: id, csrfmiddlewaretoken: csrf};
+                    $.ajax({
+                        url: "{% url 'cost_center_delete' %}",
+                        method: "POST",
+                        data: post_data,
+                        success: function (data) {
+                            console.log(data);
+                            send_messege = "<div class='alert alert-success fade show'><span class='close' data-dismiss='alert'>×</span><div class='text-center'><span class=''>Company saved</span></div></div>"
+                            $("#send_messege").html(send_messege);
+                        },
+                    });
+                } else {
+                    console.log('cancel')
+
+                }
+
+            });
+
+            // End Document.Ready
+
+
+        })
+        ;
+
+    </script>
+
+{% endblock %}

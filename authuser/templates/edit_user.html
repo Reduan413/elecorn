@@ -1,0 +1,151 @@
+{% extends "admin_base.html" %}
+{% block pageTitle %}{% endblock %}
+{% block page_title %}Edit User{% endblock %}
+{% block nav_url_path %}{% endblock %}
+{% block content %}
+    {% load static %}
+    <div id="content" class="content">
+        <div class="card bg-silver mb-3">
+            <div class="card-body py-2 px-3">
+                <div class="d-inline pull-left">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page"> Users Management </li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+                    </ol>
+                </div>
+                <div class="d-inline pull-right">
+                    <a href="{% url 'user_list' %}" class="btn btn-sm btn-primary">User List</a>
+                </div>
+            </div>
+        </div>
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"> Edit Repair Request</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload">
+                        <i class="fa fa-redo"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+            </div>
+            <div id="send_messege">
+                <!-- # Messege Visible Here -->
+            </div>
+            <div class="panel-body">
+                <form action="" method="POST" id="post-form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <input type="hidden" name="edit_id" value="{{ display_data.id }}" id="{{ display_data.id }}">
+                        <div class="col-md-2 form-group">
+                            <label> First Name </label>
+                            <input type="text" name="first_name" class="form-control" value="{{ display_data.first_name }}"/>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label> Last Name </label>
+                            <input type="text" name="last_name" class="form-control" value="{{ display_data.last_name }}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" value="{{ display_data.username }}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control"  value="{{ display_data.email }}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Contact No</label>
+                            <input type="text" name="contact_no" class="form-control" value="{{ display_data.contact_no }}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" />
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Repeat Password</label>
+                            <input type="password" name="re_password" class="form-control"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>
+                                <br>
+                            </label>
+                            <br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="is_admin" value="" id="is_admin" {% if  display_data.is_admin == True %} id="flexCheckChecked" checked {% endif %} />
+                                <label class="form-check-label" for="flexCheckDefault">Admin</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-right bg-silver-darker rounded">
+                        <input type="submit" class="btn btn-white px-3" value="New" id="form_clear"/>
+                        <input type="submit" class="btn btn-dark px-5" value="Save" id="btnSave"/>
+                    </div>
+            </div>
+            </form>
+        </div>
+        <!-- end panel -->
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        // Default and Convert to Decimal Value
+        $(document).ready(function () {
+            // Ajax POST Request
+            $("#post-form-data").on('submit', function (e) {
+                e.preventDefault();
+                let csrf = $("input[name=csrfmiddlewaretoken]").val();
+                let postContentForm = $("#post-form-data").serialize();
+                console.log(postContentForm);
+                // let data = {};
+                // $.each(postContentForm, function () {
+                //     data[this.name] = this.value;
+                // })
+                // console.log(data);
+                post_data = {
+                    csrfmiddlewaretoken: csrf,
+                    'data': postContentForm
+                };
+                console.log(post_data);
+                $.ajax({
+                    url: "{% url 'create_user' %}",
+                    method: 'POST',
+                    data: postContentForm,
+                    async: true,
+                    success: function (result) {
+                        $('form').trigger('reset');
+                        send_messege = "<div class='alert alert-success fade show'><span class='close' data-dismiss='alert'>×</span><div class='text-center'><span class=''>User Edited</span></div></div>"
+                        $("#send_messege").html(send_messege);
+                    }
+                })
+            });
+
+            // Clear on click New
+            $("#form_clear").on('click', function (e) {
+                e.preventDefault();
+                $('form').trigger('reset');
+                let selling_price = $("#selling_price-id").val();
+                if (selling_price == "") {
+                    $("#selling_price-id").val("0.00");
+                } else {
+                    $('#selling_price-id').val(parseInt(selling_price).toFixed(2));
+                }
+
+                let purchase_price = $("#purchase_price-id").val();
+                if (purchase_price == "") {
+                    $("#purchase_price-id").val("0.00");
+                } else {
+                    $('#purchase_price-id').val(parseInt(purchase_price).toFixed(2));
+                }
+            });
+
+            // End Document.Ready
+
+
+        });
+    </script>
+{% endblock %}

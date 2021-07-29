@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% block page_title %}{% endblock %} | ELECORN</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    {% include "admin_header.html" %}
+</head>
+
+<body>
+    <!-- begin #page-loader -->
+    <div id="page-loader" class="fade show">
+        <span class="spinner"></span>
+    </div>
+    <!-- end #page-loader -->
+    <!-- begin #page-container -->
+    <div id="page-container" class="page-container fade page-sidebar-fixed page-header-fixed page-with-wide-sidebar page-with-light-sidebar">
+        <!-- begin #header -->
+        <div id="header" class="header navbar-inverse">
+            <!-- begin navbar-header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle-left" data-click="sidebar-minify">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand">
+                    <b class="mr-1">ELE</b>CORN
+                    <span class="navbar-logo">
+                        <span class="text-red">S</span>
+                        <span class="text-red">E</span>
+                        <span class="text-red">A</span>
+                        <span class="text-red">R</span>
+                        <span class="text-red">A</span>
+                    </span>
+                </a>
+                <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- end navbar-header -->
+            <!-- begin header-nav -->
+            <ul class="navbar-nav d-flex flex-grow-1">
+                <li class="navbar-form flex-grow-1">
+                    <form action="" method="POST" name="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder='Try searching "Users Today"' />
+                            <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </li>
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <i class="fa fa-bell"></i>
+                        <span class="label label-primary">0</span>
+                    </a>
+                    <div class="dropdown-menu media-list dropdown-menu-right">
+                        <div class="dropdown-header">Notifications (0)</div>
+                        <div class="text-center width-300 p-b-10 p-t-10">
+                            No notification found
+                        </div>
+                    </div>
+                </li>
+                <li class="dropdown navbar-user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <div class="image image-icon bg-black text-grey-darker">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <span class="d-none d-md-inline">{{ request.user.username }}<b class="caret"></b></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{% url 'user_edit' request.user.id %}" class="dropdown-item">Edit Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{%  url 'logout' %}" class="dropdown-item">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+            <!-- end header-nav -->
+        </div>
+        <!-- end #header -->
+
+
+        <!-- begin #sidebar -->
+        {% include "admin_sidebar.html" %}
+        <!-- end #sidebar -->
+        <!-- begin #content -->
+        {% block content %}
+        {% endblock content %}
+        <!-- end #content -->
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+    {% block javascript %}
+    {% endblock %}
+    {% include "admin_footer.html" %}
+
+</body>
+
+</html>

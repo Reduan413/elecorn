@@ -1,0 +1,263 @@
+{% extends "admin_base.html" %}
+{% block pageTitle %}{% endblock %}
+{% block page_title %} Device Reparing{% endblock %}
+{% block nav_url_path %}{% endblock %}
+{% block content %} {% load static %}
+    <div id="content" class="content">
+        <div class="card bg-silver mb-3">
+            <div class="card-body py-2 px-3">
+                <div class="d-inline pull-left">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page"> Engineer </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a href="{% url 'engineer_assigned_list' %}"> Repair Request </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page"> Device Reparing </li>
+                    </ol>
+                </div>
+                <div class="d-inline pull-right">
+                    <a href="{% url 'repair_request_list' %}" class="btn btn-sm btn-primary"> Repair Request List </a>
+                </div>
+            </div>
+        </div> <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"> Create Repair Request</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload">
+                        <i class="fa fa-redo"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+            </div>
+            <div id="send_messege"> <!-- # Messege Visible Here --> </div>
+            <div class="panel-body">
+                <h5 class="text-center">Repair Request Details</h5>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td width="15%" class="table-active">
+                                <b>Code: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.code }}</td>
+                            <td width="15%" class="table-active">
+                                <b>Date: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.date }}</td>
+                        </tr>
+                        <tr>
+                            <td width="15%" class="table-active">
+                                <b>Device Name: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.device_name }}</td>
+                            <td width="15%" class="table-active">
+                                <b>Model No: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.model_no }}</td>
+                        </tr>
+                        <tr>
+                            <td width="15%" class="table-active">
+                                <b>Brand: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.brand }}</td>
+                            <td width="15%" class="table-active">
+                                <b>Incident Category: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.incident_category }}</td>
+                        </tr>
+                        <tr>
+                            <td width="15%" class="table-active">
+                                <b>Details: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.details }}</td>
+                            <td width="15%" class="table-active">
+                                <b>Assign Remarks: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.details }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td width="15%" class="table-active">
+                                <b>Status: </b>
+                            </td>
+                            <td width="35%" class="{% if repair_data.status == 'Pending' %}table-warning {% else %}{% endif %}">{{ repair_data.status }}</td>
+                        </tr>
+                        <tr>
+                            <td width="15%" class="table-active">
+                                <b>Person Name: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.person_name }}</td>
+                            <td width="15%" class="table-active">
+                                <b>Address: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.address }}</td>
+                        </tr>
+                        <tr>
+                            <td width="15%" class="table-active">
+                                <b>Email: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.email }}</td>
+                            <td width="15%" class="table-active">
+                                <b>Primary Contact No: </b>
+                            </td>
+                            <td width="35%">{{ repair_data.primary_contact_no }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="panel-body">
+                    <form action="" method="POST" id="post-form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <input type="hidden" id="repair_request_id" name="engineer_id" value="{{ request.user.id }}">
+                            <div class="col-md-4 form-group">
+                                <label> Part Request </label>
+                                <select name="part_id" class="default-select2 form-control">
+                                    {% for data in user_data %}
+                                        <option value="{{ data.id }}">{{ data.first_name }} {{ data.last_name }} ({{ data.username }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-7 form-group">
+                                <label> Remarks </label>
+                                <input type="text" name="remarks" class="form-control" />
+                            </div>
+                            <div class="col-md-1 form-group">
+                                <label>
+                                    <br>
+                                </label>
+                                <br>
+                                <input type="submit" class="btn btn-dark" value="Send" id="btnSave" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <input type="hidden" id="repair_request_id" name="engineer_id" value="{{ request.user.id }}">
+                                        <div class="col-md-12 form-group">
+                                            <label> Engage Engineer </label>
+                                            <select name="part_id" class="default-select2 form-control">
+                                                {% for data in user_data %}
+                                                    <option value="{{ data.id }}">{{ data.first_name }} {{ data.last_name }} ({{ data.username }})</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label> Remarks </label>
+                                            <textarea type="text" name="remarks" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group text-right">
+                                            <input type="submit" class="btn btn-dark" value="Assign" id="btnSave" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <input type="hidden" id="repair_request_id" name="engineer_id" value="{{ request.user.id }}">
+                                        <div class="col-md-12 form-group">
+                                            <label> Engage Engineer </label>
+                                            <select name="engineer_id" class="default-select2 form-control">
+                                                {% for data in user_data %}
+                                                    <option value="{{ data.id }}">{{ data.first_name }} {{ data.last_name }} ({{ data.username }})</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label> Remarks </label>
+                                            <textarea type="text" name="remarks" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group text-right">
+                                            <input type="submit" class="btn btn-dark" value="Assign" id="btnSave" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="" method="POST" id="post-form-data">
+                        {% csrf_token %}
+                        <div class="row"></div>
+                    </form>
+                </div>
+            </div>
+        </div> <!-- end panel -->
+    </div>{% endblock %}
+{% block javascript %}
+    <script> // Default and Convert to Decimal Value
+    $(document).ready(function () {
+        // Ajax POST Request
+        $("#post-form-data").on('submit', function (e) {
+            e.preventDefault();
+            let csrf = $("input[name=csrfmiddlewaretoken]").val();
+            let postContentForm = $("#post-form-data").serialize();
+            console.log(postContentForm);
+            let data = {};
+            $.each(postContentForm, function () {
+                data[this.name] = this.value;
+            })
+            console.log(data);
+            post_data = {
+                csrfmiddlewaretoken: csrf,
+                'data': postContentForm
+            };
+            console.log(post_data);
+            $.ajax({
+                url: "{% url 'repair_request_assign_post' %}",
+                method: 'POST',
+                data: postContentForm,
+                async: true,
+                success: function (result) {
+                    $('form').trigger('reset');
+                    if (result.status == 1) {
+                        send_messege = "<div class='alert alert-success fade show'><span class='close' data-dismiss='alert'>×</span><div class='text-center'><span class=''>Repair Request Saved</span></div></div>"
+                        $("#send_messege").html(send_messege);
+                    } else {
+                        send_messege = "<div class='alert alert-danger fade show'><span class='close' data-dismiss='alert'>×</span><div class='text-center'><span class=''>Repair Request Already Saved</span></div></div>"
+                        $("#send_messege").html(send_messege);
+                    }
+                }
+            })
+        });
+        // Clear on click New
+        $("#form_clear").on('click', function (e) {
+            e.preventDefault();
+            $('form').trigger('reset');
+            let selling_price = $("#selling_price-id").val();
+            if (selling_price == "") {
+                $("#selling_price-id").val("0.00");
+            } else {
+                $('#selling_price-id').val(parseInt(selling_price).toFixed(2));
+            }
+            let purchase_price = $("#purchase_price-id").val();
+            if (purchase_price == "") {
+                $("#purchase_price-id").val("0.00");
+            } else {
+                $('#purchase_price-id').val(parseInt(purchase_price).toFixed(2));
+            }
+        });
+    });
+    // End Document.Ready });
+    </script>
+{% endblock %}
