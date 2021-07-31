@@ -1,13 +1,13 @@
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-import \
-    datetime
-from django.contrib import messages
-from .models import *
-from inventory.models import *
-from company.models import *
-from authuser.models import *
+import datetime
 
+from authuser.models import *
+from company.models import *
+from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
+from inventory.models import *
+
+from .models import *
 
 # Create your views here.
 
@@ -86,7 +86,7 @@ class repair_request:
                 brand_id = Brand.objects.only().get(id=request.POST.get('brand_id'))
                 incident_category_id = Incident_Category.objects.only().get(id=request.POST.get('incident_category_id'))
                 print(request.POST.get('narrition'))
-                save_data = Repair_Request.objects.update(code=request.POST.get('code'), date=request.POST.get('date'), device_name=request.POST.get('device_name'), part_no=request.POST.get('part_no'), serial_no=request.POST.get('serial_no'), model_no=request.POST.get('model_no'), brand_id=brand_id, incident_category_id=incident_category_id, details=request.POST.get('details'), person_name=request.POST.get('person_name'), primary_contact_no=request.POST.get('primary_contact_no'), email=request.POST.get('email'), address=request.POST.get('address'), narrition=request.POST.get('narration'), status="Hold")
+                save_data = Repair_Request.objects.update(code=request.POST.get('code'), date=request.POST.get('date'), device_name=request.POST.get('device_name'), part_no=request.POST.get('part_no'), serial_no=request.POST.get('serial_no'), model_no=request.POST.get('model_no'), brand_id=brand_id, incident_category_id=incident_category_id, details=request.POST.get('details'),service_type=request.POST.get('serviceType'),price=request.POST.get('price'), person_name=request.POST.get('person_name'), primary_contact_no=request.POST.get('primary_contact_no'), email=request.POST.get('email'), address=request.POST.get('address'), narrition=request.POST.get('narration'), status="Hold")
 
                 save_data.clean()
                 save_data.save()
@@ -96,7 +96,7 @@ class repair_request:
             else:
                 brand_id = request.POST.get('brand_id')
                 incident_category_id = request.POST.get('incident_category_id')
-                save_data = Repair_Request.objects.create(code=request.POST.get('code'), date=request.POST.get('date'), device_name=request.POST.get('device_name'), part_no=request.POST.get('part_no'), serial_no=request.POST.get('serial_no'), model_no=request.POST.get('model_no'), brand_id=brand_id, incident_category_id=incident_category_id, details=request.POST.get('details'), person_name=request.POST.get('person_name'), primary_contact_no=request.POST.get('primary_contact_no'), email=request.POST.get('email'), address=request.POST.get('address'), narrition=request.POST.get('narrition'), status="Hold")
+                save_data = Repair_Request.objects.create(code=request.POST.get('code'), date=request.POST.get('date'), device_name=request.POST.get('device_name'), part_no=request.POST.get('part_no'), serial_no=request.POST.get('serial_no'), model_no=request.POST.get('model_no'), brand_id=brand_id, incident_category_id=incident_category_id, details=request.POST.get('details'),service_type=request.POST.get('serviceType'),price=request.POST.get('price'), person_name=request.POST.get('person_name'), primary_contact_no=request.POST.get('primary_contact_no'), email=request.POST.get('email'), address=request.POST.get('address'), narrition=request.POST.get('narrition'), status="Hold")
 
                 save_data.clean()
                 save_data.save()

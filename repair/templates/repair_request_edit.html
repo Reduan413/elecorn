@@ -135,6 +135,29 @@
                             </label>
                             <textarea class="form-control" name="details">{{ edit_view.details }}</textarea>
                         </div>
+                        <div class="col-md-3 form-group">
+                            <label>
+                                Service Type
+                            </label>
+                            <select name="serviceType" class="default-select2 form-control">
+                                {% if  edit_view.service_type == "Warranty"%}
+                                    <option value="Warranty" selected>Warranty</option>
+                                    <option value="Non Warranty">Non Warranty</option>
+                                {% elif edit_view.service_type == "Non Warranty" %}
+                                    <option value="Warranty" >Warranty</option>
+                                    <option value="Non Warranty" selected>Non Warranty</option>
+                                {% else%}
+                                    <option value="Warranty">Warranty</option>
+                                    <option value="Non Warranty">Non Warranty</option>
+                                {% endif%}
+                            </select>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>
+                                Price
+                            </label>
+                            <input type="text" name="price" class="form-control" value="{{ edit_view.price }}"/>
+                        </div>
                         <div class="col-md-12">
                             <h5 class="text-center bg-silver text-gray rounded py-2 px-2">
                                 Additional

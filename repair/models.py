@@ -1,8 +1,8 @@
+from authuser.models import *
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.conf import settings
 from inventory.models import *
-from authuser.models import *
 
 # Create your models here.
 
@@ -24,6 +24,8 @@ class Repair_Request(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     incident_category = models.ForeignKey(Incident_Category, on_delete=models.CASCADE)
     details = models.TextField()
+    service_type = models.CharField(max_length=50, null=True)
+    price = models.CharField(max_length=50, null=True)
     person_name = models.CharField(max_length=255)
     primary_contact_no = models.CharField(max_length=15)
     email = models.CharField(max_length=100)

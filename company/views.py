@@ -109,20 +109,21 @@ class user_information:
                 uemail = request.POST["email"]
                 uuserName = request.POST["userName"]
                 upassword = request.POST["password"]
-                ucompany = request.POST["company"]
+                
                 userinformations.firstName = ufirstName
                 userinformations.lastName = ulastName
                 userinformations.email = uemail
                 userinformations.userName = uuserName
                 userinformations.password = upassword
-                userinformations.company = ucompany
                 userinformations.save()
+                userinformations.company.set(request.POST["company"])
                 messages.success(request, 'Updated Successfully!')
                 return redirect('/company/user_information')
 
         else:
             userinformations = UserInformation.objects.get(pk=id)
-            return render(request, 'edit_information.html', {'userinformations': userinformations})
+            companys = Company.objects
+            return render(request, 'edit_information.html', {'userinformations': userinformations, 'companys' : companys})
 
     @login_required
     def delete(request, id):
